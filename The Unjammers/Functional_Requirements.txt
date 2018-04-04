@@ -1,13 +1,14 @@
 Functional Requirements
 
-	1. Accept n number of vehicles
-	2. Allow user to specify size of circle (radius)
-	3. Allow user to specify number of exits and their locations
-	4. Allow user to customize parameters of vehicles
-	5. Accept a file input of user parameters
-	6. Provide a visual output of the relative positions of agents as
-		as the program runs
-	7. Measure time through a ticker
-	8. Allow user to configure traffic signaling devices and their locations
-	9. Return 
+	1.  Accept n number of vehicles
+	2.  Allow user to specify size of circle (radius)
+	3.  Allow user to specify number of exits and their locations
+	4.  Allow user to customize parameters of vehicles
+	5.  Accept a file input of user parameters
+	6.  Provide a visual output of the relative positions of agents as
+		 as the program runs
+	7.  Measure time through a ticker
+	8.  Allow user to configure traffic signaling devices and their locations
+	9.  Return an output consisting of time to empty and number of detected jams
+	
 	
