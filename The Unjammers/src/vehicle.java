@@ -29,6 +29,10 @@ public class vehicle {
 	//TODO figure out vehicle constructor based on user input
 	public vehicle(){
 		//stuff happens and random vehicles are generated
+
+		
+		
+		
 	}
 	
 	
