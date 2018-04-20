@@ -1,15 +1,12 @@
-
+import java.util.Random;
 public class vehicle {
 	
 	//class veriables
 	public double position;
 	public int speed;
-	public int length;
+	public float length;
 	public int exitNum;
 	public int aggLvl;
-	public int maxAccl;
-	public int minFolDist;
-	public int vehicleClass;
 	public int lane;
 	public int vehicleID;
 	
@@ -20,21 +17,21 @@ public class vehicle {
 		this.length = length;
 		this.exitNum = exitNum;
 		this.aggLvl = aggLvl;
-		this.maxAccl = maxAccl;
-		this.minFolDist = minFolDist;
-		this.vehicleClass = vehicleClass;
 		this.lane = lane;
 		this.vehicleID = vehicleID;
 	}
 	//TODO figure out vehicle constructor based on user input
-	public vehicle(){
+	public vehicle(	int minAggression, int maxAggression, int numCars, int numXs, int numTrucks, int numIT, int numLanes, float minCarLength, float maxCarLength, float avCarLength, float minXLength, float avXLength, float maxXLength, float minSUVLength, float avSUVLength, float maxSUVLength, float minTruckLength, float avTruckLength, float maxTruckLength, float minITLength, float avITLength, float maxITLength, float minCarBrake, float maxCarBrake, float avCarBrake, float minXBrake, float avXBrake, float maxXBrake, float minSUVBrake, float avSUVBrake, float maxSUVBrake, float minTruckBrake, float avTruckBrake, float maxTruckBrake, float minITBrake, float avITBrake, float maxITBrake, float minCarAccl, float maxCarAccl, float avCarAccl, float minXAccl, float avXAccl, float maxXAccl, float minSUVAccl, float avSUVAccl, float maxSUVAccl, float minTruckAccl, float avTruckAccl, float maxTruckAccl, float minITAccl, float avITAccl, float maxITAccl, float minReact, float avReact, float maxReact){
 		//stuff happens and random vehicles are generated
-
-		
-		
-		
+		for(int i =0; i < numCars; i++){
+			Random rand = new Random();
+			aggLvl = (int)(Math.random() * ((maxAggression - minAggression) + 1 )) + minAggression;
+			speed = 0;
+			length = vehicleRandomizer(minCarLength, avCarLength, maxCarLength);
+			exitNum = rand.nextInt(numLanes) + 1;
+			position = 0;
+		}
 	}
-	
 	
 	//Getters
 	public double getPosition(){
@@ -45,7 +42,7 @@ public class vehicle {
 		return speed;
 	}
 	
-	public int getLength(){
+	public float getLength(){
 		return length;
 	}
 	
@@ -57,23 +54,22 @@ public class vehicle {
 		return aggLvl;
 	}
 	
-	public int getMaxAccl(){
-		return maxAccl;
-	}
-	
-	public int getMinFolDist(){
-		return minFolDist;
-	}
-	
-	public int getVehicleClass(){
-		return vehicleClass;
-	}
-	
 	public int getLane(){
 		return lane;
 	}
 	
 	public int getVehicleID(){
 		return vehicleID;
+	}
+	
+	public float vehicleRandomizer(float min, float av, float max){
+		float M = (min*min);
+		float A = (av * av); 
+		float X = (max * max);
+		float var = M + A + X;
+		float std = (float) Math.sqrt(var);
+		Random gen = new Random();
+		float rand = (float)((gen.nextGaussian()) * std) + av;
+		return rand;
 	}
 }

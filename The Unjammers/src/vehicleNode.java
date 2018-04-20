@@ -14,7 +14,6 @@ public class vehicleNode {
 	}
 	
 	
-	
 	/**
 	 * secondary constructor
 	 * @param v - vehicle info
