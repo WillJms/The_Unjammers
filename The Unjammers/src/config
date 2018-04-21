@@ -1,10 +1,10 @@
 numVehicles 20
-minAggression
-maxAggression
-numCars
-numXs
-numTrucks
-numIT
+minAggression 1
+maxAggression 10
+numCars 50
+numXs 50
+numTrucks 50
+numIT 50
 minCarLength 4
 maxCarLength 4.5
 avCarLength 4.25  
@@ -23,12 +23,12 @@ maxITLength 8.5
 minCarBrake 22.52
 maxCarBrake 42.36
 avCarBrake 29.26
-minXBrake 
-avXBrake  
-maxXBrake 
-minSUVBrake 
-avSUVBrake  
-maxSUVBrake 
+minXBrake 31.53
+avXBrake 40.9
+maxXBrake 48.2 
+minSUVBrake 25.76
+avSUVBrake  33.0
+maxSUVBrake 40.24
 minTruckBrake 27.12
 avTruckBrake 34.74
 maxTruckBrake 42.36
