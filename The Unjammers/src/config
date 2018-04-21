@@ -20,21 +20,21 @@ maxTruckLength 6.3
 minITLength 6.7
 avITLength 7.6
 maxITLength 8.5
-minCarBrake 
-maxCarBrake 
-avCarBrake 
+minCarBrake 22.52
+maxCarBrake 42.36
+avCarBrake 29.26
 minXBrake 
 avXBrake  
 maxXBrake 
 minSUVBrake 
 avSUVBrake  
 maxSUVBrake 
-minTruckBrake 
-avTruckBrake 
-maxTruckBrake 
-minITBrake 
-avITBrake  
-maxITBrake 
+minTruckBrake 27.12
+avTruckBrake 34.74
+maxTruckBrake 42.36
+minITBrake 36.5
+avITBrake 43.5
+maxITBrake 51.51
 minCarAccl 7.0
 maxCarAccl 8.0
 avCarAccl 7.5
