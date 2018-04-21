@@ -3,7 +3,7 @@ public class vehicle {
 
 	//class veriables
 	public double position;
-	public int speed;
+	public float speed;
 	public float length;
 	public int exitNum;
 	public int aggLvl;
@@ -43,7 +43,7 @@ public class vehicle {
 		return position;
 	}
 
-	public int getSpeed(){
+	public float getSpeed(){
 		return speed;
 	}
 
@@ -80,6 +80,12 @@ public class vehicle {
 	}
 	public void setID (int num){
 		vehicleID = num;
+	}
+	public void setPosition (float l) {
+		position = l;
+	}
+	public void setSpeed (float s) {
+		speed = s;
 	}
 
 	public float vehicleRandomizer(float min, float av, float max){

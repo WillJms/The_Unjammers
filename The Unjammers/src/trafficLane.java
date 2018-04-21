@@ -39,5 +39,9 @@ public class trafficLane {
 		(cur.prev).next = cur.next;
 		(cur.next).prev = cur.prev;
 	}
+	
+	public int getSize() {
+		return size;
+	}
 
 }
