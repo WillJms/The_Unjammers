@@ -9,6 +9,7 @@ public class simManager {
 	int maxAggression;
 	int numCars;
 	int numXs;
+	int numSUV;
 	int numTrucks;
 	int numIT;
 
@@ -78,7 +79,7 @@ public class simManager {
 	int l6Loc;
 	int laneLength = 1000;
 	float laneSpeedLim;
-	
+
 	trafficLane lane1;
 	trafficLane lane2;
 	trafficLane lane3;
@@ -100,12 +101,12 @@ public class simManager {
 				//String line = sc.nextLine();
 
 				switch (sc.next()) {
-				
+
 				case "minAggression":
 					minAggression = sc.nextInt();
 					break;
-				
-					
+
+
 				case "maxAggression":
 					maxAggression = sc.nextInt();
 					break;
@@ -359,5 +360,67 @@ public class simManager {
 		}
 	}
 
+	public void createTraffic(int numLanes, float minReact, float avReact,	float maxReact, int minAggression,	int maxAggression, int numCars,	int numXs, int numSUV,	int numTrucks, int numIT, float minCarLength, float maxCarLength, float avCarLength, float minXLength, float avXLength, float maxXLength, float minSUVLength, float avSUVLength, float maxSUVLength, float minTruckLength, float avTruckLength, float maxTruckLength, float minITLength, float avITLength, float maxITLength,float minCarBrake, float maxCarBrake, float avCarBrake, float minXBrake, float avXBrake, float maxXBrake, float minSUVBrake, float avSUVBrake, float maxSUVBrake, float minTruckBrake, float avTruckBrake, float maxTruckBrake, float minITBrake, float avITBrake, float maxITBrake,float minCarAccl, float maxCarAccl, float avCarAccl, float minXAccl, float avXAccl, float maxXAccl, float minSUVAccl, float avSUVAccl, float maxSUVAccl, float minTruckAccl, float avTruckAccl, float maxTruckAccl, float minITAccl, float avITAccl, float maxITAccl){
+
+		for(int i = 0; i < (numCars + numXs + numTrucks + numIT); i++){
+			if (i <= numCars){
+				vehicle car = new vehicle(numLanes,  minAggression,  maxAggression,  numCars, minCarLength, maxCarLength, avCarLength, minCarBrake,  maxCarBrake,  avCarBrake,  minCarAccl,  maxCarAccl,  avCarAccl,  minReact,  avReact,  maxReact);
+				car.setID(i);
+				addToLane(car);
+			}
+			
+			if(i <= numXs){
+				vehicle x = new vehicle(numLanes, minAggression, maxAggression, numXs, minXLength, maxXLength, avXLength, minXBrake, avXBrake, maxXBrake, minXAccl, avXAccl, maxXAccl, minReact,  avReact,  maxReact);
+				x.setID((i + numCars));
+				addToLane(x);
+			}
+			
+			if (i <= numSUV){
+				vehicle SUV = new vehicle(numLanes, minAggression, maxAggression, numSUV, minSUVLength, maxSUVLength, avSUVLength, minSUVBrake, avSUVBrake, maxSUVBrake, minSUVAccl, avSUVAccl, maxSUVAccl, minReact,  avReact,  maxReact);
+				SUV.setID(i + numCars + numXs);
+				addToLane(SUV);
+			}
+			
+			if (i <= numTrucks){
+				vehicle truck = new vehicle(numLanes, minAggression, maxAggression, numTrucks, minTruckLength, maxTruckLength, avTruckLength, minTruckBrake, avTruckBrake, maxTruckBrake, minTruckAccl, avTruckAccl, maxTruckAccl, minReact,  avReact,  maxReact);
+				truck.setID(i + numCars + numXs + numSUV);
+				addToLane(truck);
+			}
+			
+			if (i <= numIT){
+				vehicle IT = new vehicle(numLanes, minAggression, maxAggression, numIT, minITLength, maxITLength, avITLength, minITBrake, avITBrake, maxITBrake, minITAccl, avITAccl, maxITAccl, minReact,  avReact,  maxReact);
+				IT.setID(i + numCars + numXs + numSUV + numTrucks);
+				addToLane(IT);
+			}
+		}
+	}
+	
+	public void addToLane(vehicle car){
+		switch(car.getLane()){
+		case 1:
+			lane1.addVehicle(car);
+			break;
+		
+		case 2:
+			lane2.addVehicle(car);
+			break;
+			
+		case 3:
+			lane3.addVehicle(car);
+			break;
+			
+		case 4:
+			lane4.addVehicle(car);
+			break;
+			
+		case 5:
+			lane5.addVehicle(car);
+			break;
+			
+		case 6:
+			lane6.addVehicle(car);
+			break;
+		}
+	}
 
 }

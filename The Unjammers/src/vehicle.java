@@ -1,6 +1,6 @@
 import java.util.Random;
 public class vehicle {
-	
+
 	//class veriables
 	public double position;
 	public int speed;
@@ -9,9 +9,12 @@ public class vehicle {
 	public int aggLvl;
 	public int lane;
 	public int vehicleID;
-	
+	public float brakeDist;
+	public float accel;
+	public float react;
+
 	//default constructor
-	public vehicle(double position, int speed, int length, int exitNum, int aggLvl, int maxAccl, int minFolDist, int vehicleClass, int lane, int vehicleID){
+	public vehicle(double position, int speed, int length, int exitNum, int aggLvl, int maxAccl, int lane, int vehicleID){
 		this.position = position;
 		this.speed = speed;
 		this.length = length;
@@ -21,47 +24,64 @@ public class vehicle {
 		this.vehicleID = vehicleID;
 	}
 	//TODO figure out vehicle constructor based on user input
-	public vehicle(	int minAggression, int maxAggression, int numCars, int numXs, int numTrucks, int numIT, int numLanes, float minCarLength, float maxCarLength, float avCarLength, float minXLength, float avXLength, float maxXLength, float minSUVLength, float avSUVLength, float maxSUVLength, float minTruckLength, float avTruckLength, float maxTruckLength, float minITLength, float avITLength, float maxITLength, float minCarBrake, float maxCarBrake, float avCarBrake, float minXBrake, float avXBrake, float maxXBrake, float minSUVBrake, float avSUVBrake, float maxSUVBrake, float minTruckBrake, float avTruckBrake, float maxTruckBrake, float minITBrake, float avITBrake, float maxITBrake, float minCarAccl, float maxCarAccl, float avCarAccl, float minXAccl, float avXAccl, float maxXAccl, float minSUVAccl, float avSUVAccl, float maxSUVAccl, float minTruckAccl, float avTruckAccl, float maxTruckAccl, float minITAccl, float avITAccl, float maxITAccl, float minReact, float avReact, float maxReact){
-		//stuff happens and random vehicles are generated
-		for(int i =0; i < numCars; i++){
-			Random rand = new Random();
-			aggLvl = (int)(Math.random() * ((maxAggression - minAggression) + 1 )) + minAggression;
-			speed = 0;
-			length = vehicleRandomizer(minCarLength, avCarLength, maxCarLength);
-			exitNum = rand.nextInt(numLanes) + 1;
-			position = 0;
-		}
+	public vehicle(	int numLanes, int minAggression, int maxAggression, int numCars,float minCarLength, float maxCarLength, float avCarLength, float minCarBrake, float maxCarBrake, float avCarBrake, float minCarAccl, float maxCarAccl, float avCarAccl, float minReact, float avReact, float maxReact){
+		Random rand = new Random();
+		position = 0;
+		speed = 0;
+		length = vehicleRandomizer(minCarLength, avCarLength, maxCarLength);
+		brakeDist = vehicleRandomizer(minCarBrake, avCarBrake, maxCarBrake);
+		accel = vehicleRandomizer(minCarAccl, avCarAccl, maxCarAccl);
+		react = vehicleRandomizer(minReact, avReact, maxReact);
+		exitNum = rand.nextInt(numLanes) + 1;
+		aggLvl = (int)(Math.random() * ((maxAggression - minAggression) + 1 )) + minAggression;
+		lane = rand.nextInt(numLanes) + 1;
+
 	}
-	
-	//Getters
+
+	//Getters and setter
 	public double getPosition(){
 		return position;
 	}
-	
+
 	public int getSpeed(){
 		return speed;
 	}
-	
+
 	public float getLength(){
 		return length;
 	}
-	
+
 	public int getExitNum(){
 		return exitNum;
 	}
-	
+
 	public int getAggLvl(){
 		return aggLvl;
 	}
-	
+
 	public int getLane(){
 		return lane;
 	}
-	
+
 	public int getVehicleID(){
 		return vehicleID;
 	}
 	
+	public float getBrake(){
+		return brakeDist;
+	}
+	
+	public float getAccl(){
+		return accel;
+	}
+	
+	public float getReact(){
+		return react;
+	}
+	public void setID (int num){
+		vehicleID = num;
+	}
+
 	public float vehicleRandomizer(float min, float av, float max){
 		float M = (min*min);
 		float A = (av * av); 
