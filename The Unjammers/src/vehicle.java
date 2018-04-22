@@ -42,39 +42,30 @@ public class vehicle {
 	public double getPosition(){
 		return position;
 	}
-
 	public float getSpeed(){
 		return speed;
 	}
-
 	public float getLength(){
 		return length;
 	}
-
 	public int getExitNum(){
 		return exitNum;
 	}
-
 	public int getAggLvl(){
 		return aggLvl;
 	}
-
 	public int getLane(){
 		return lane;
 	}
-
 	public int getVehicleID(){
 		return vehicleID;
 	}
-	
 	public float getBrake(){
 		return brakeDist;
 	}
-	
 	public float getAccl(){
 		return accel;
 	}
-	
 	public float getReact(){
 		return react;
 	}
