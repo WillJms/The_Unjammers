@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.util.Scanner;
 
 public class simManager {
@@ -78,43 +79,39 @@ public class simManager {
 	static int l4Loc;
 	static int l5Loc;
 	static int l6Loc;
-	static float l1PosX;
-	static float l2PosX;
-	static float l3PosX;
-	static float l4PosX;
-	static float l5PosX;
-	static float l6PosX;
-	static float l1PosY;
-	static float l2PosY;
-	static float l3PosY;
-	static float l4PosY;
-	static float l5PosY;
-	static float l6PosY;
+	static float l1Pos;
+	static float l2Pos;
+	static float l3Pos;
+	static float l4Pos;
+	static float l5Pos;
+	static float l6Pos;
+
 	static int laneLength = 2000;
 	static float laneSpeedLim;
 
-	static trafficLane lane1;
-	static trafficLane lane2;
-	static trafficLane lane3;
-	static trafficLane lane4;
-	static trafficLane lane5;
-	static trafficLane lane6;
-	static trafficLane exit1;
-	static trafficLane exit2;
-	static trafficLane exit3;
-	static trafficLane exit4;
-	static trafficLane exit5;
-	static trafficLane exit6;
-	static trafficLane circle;
+
 
 	//Circle Parameters
 	static float cirDiameter;
 	static float cirSpeedLim;
 
 	public static void main (String args[]) {
+		trafficLane lane1 = new trafficLane();
+		trafficLane lane2 = new trafficLane();
+		trafficLane lane3 = new trafficLane();
+		trafficLane lane4 = new trafficLane();
+		trafficLane lane5 = new trafficLane();
+		trafficLane lane6 = new trafficLane();
+		trafficLane exit1 = new trafficLane();
+		trafficLane exit2 = new trafficLane();
+		trafficLane exit3 = new trafficLane();
+		trafficLane exit4 = new trafficLane();
+		trafficLane exit5 = new trafficLane();
+		trafficLane exit6 = new trafficLane();
+		trafficLane circle = new trafficLane();
 		parseConfigFile();
 
-		createTraffic( numLanes, minReact, avReact,	 maxReact, minAggression,
+		createTraffic(lane1,  lane2,   lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,  exit6,  circle, numLanes, minReact, avReact,	 maxReact, minAggression,
 				maxAggression,  numCars,	 numXs,  numSUV, numTrucks,  numIT,  minCarLength,  maxCarLength,
 				avCarLength,  minXLength,  avXLength,  maxXLength,  minSUVLength,  avSUVLength,  maxSUVLength,
 				minTruckLength,  avTruckLength,  maxTruckLength,  minITLength,  avITLength,  maxITLength,
@@ -126,26 +123,15 @@ public class simManager {
 
 		float time = 0;
 		float rad = cirDiameter /2;
-		//float originX = 0;
-		//float originY = 0;
-		//int originLoc = 0;
-
-		l1PosX = (float) (rad * Math.cos(Math.toRadians(l1Loc)));
-		l1PosY = (float) (rad * Math.sin(Math.toRadians(l1Loc)));
-		l2PosX = (float) (rad * Math.cos(Math.toRadians(l2Loc)));
-		l2PosY = (float) (rad * Math.sin(Math.toRadians(l2Loc)));
-		l3PosX = (float) (rad * Math.cos(Math.toRadians(l3Loc)));
-		l3PosY = (float) (rad * Math.sin(Math.toRadians(l3Loc)));
-		l4PosX = (float) (rad * Math.cos(Math.toRadians(l4Loc)));
-		l4PosY = (float) (rad * Math.sin(Math.toRadians(l4Loc)));
+		l1Pos = (float) (rad * Math.toRadians(l1Loc));
+		l2Pos = (float) (rad * Math.toRadians(l2Loc));
+		l3Pos = (float) (rad * Math.toRadians(l3Loc));
+		l4Pos = (float) (rad * Math.toRadians(l4Loc));
 		if (numLanes == 5) {
-			l5PosX = (float) (rad * Math.cos(Math.toRadians(l6Loc)));
-			l5PosY = (float) (rad * Math.sin(Math.toRadians(l5Loc)));
+			l5Pos = (float) (rad * Math.toRadians(l6Loc));
 		} else if (numLanes == 6) {
-			l5PosX = (float) (rad * Math.cos(Math.toRadians(l6Loc)));
-			l5PosY = (float) (rad * Math.sin(Math.toRadians(l5Loc)));
-			l6PosX = (float) (rad * Math.cos(Math.toRadians(l6Loc)));
-			l6PosY = (float) (rad * Math.sin(Math.toRadians(l6Loc)));
+			l5Pos = (float) (rad * Math.toRadians(l6Loc));
+			l6Pos = (float) (rad * Math.toRadians(l6Loc));
 		}
 		for(int i = 0; i < 20000; i++) {
 			time = i * timeStep;
@@ -167,15 +153,139 @@ public class simManager {
 				moveTrafficExit(exit6, timeStep, laneSpeedLim, laneLength);
 			}
 
-
+			moveTrafficCircle( lane1,  lane2,  lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,   exit6,  circle,  timeStep,  cirSpeedLim,  rad);
 		}
 
 	}
-	
-	public static void movbeTrafficCircle(trafficLane circle, float timeStep, float cirSpeedLim, float rad){
+
+	public static void moveTrafficCircle(trafficLane lane1, trafficLane lane2, trafficLane lane3, trafficLane lane4, trafficLane lane5, trafficLane lane6, trafficLane exit1, trafficLane exit2, trafficLane exit3, trafficLane exit4, trafficLane exit5,  trafficLane exit6, trafficLane circle, float timeStep, float cirSpeedLim, float rad){
+
+
+		if (lane1.head.v.position == 0 && lane1.size > 0){
+			processEntry(lane1, circle, cirSpeedLim, timeStep);
+		}else if (lane2.head.v.position == 0 && lane2.size > 0){
+			processEntry(lane2, circle, cirSpeedLim, timeStep);
+		}else if (lane3.head.v.position == 0 && lane3.size > 0){
+			processEntry(lane3, circle, cirSpeedLim, timeStep);
+		}else if (lane4.head.v.position == 0 && lane4.size > 0){
+			processEntry(lane4, circle, cirSpeedLim, timeStep);
+		}else if(lane5.head.v.position == 0 && lane5.size >0){
+			processEntry(lane5, circle, cirSpeedLim, timeStep);
+		}else if(lane6.head.v.position == 0 && lane6.size > 0){
+			processEntry(lane6, circle, cirSpeedLim, timeStep);
+		}
 		
+		processExit(exit1, exit2, exit3, exit4, exit5, exit6, circle, laneSpeedLim, timeStep);
+		moveTrafficLane(circle, timeStep);
+
+	}
+
+	public static void processEntry(trafficLane lane, trafficLane circle, float cirSpeedLim, float timeStep){
+		vehicleNode merger = lane.head;
+		vehicleNode check = circle.head;
+		boolean clear = true;
+		float mergePos = 0;
+		switch(merger.v.lane){
+		case 1:
+			mergePos = l1Pos;
+			break;
+		case 2: 
+			mergePos = l2Pos;
+			break;
+		case 3:
+			mergePos = l3Pos;
+			break;
+		case 4: 
+			mergePos = l4Pos;
+			break;
+		case 5:
+			mergePos = l5Pos;
+			break;
+		case 6:
+			mergePos = l6Pos;
+			break;
+		}
+
+		if(circle.size > 0){
+			for(int i = 0; i < circle.size; i++){
+				if(check.v.position >= (mergePos - (  (Math.pow((cirSpeedLim/(merger.v.aggLvl/2)),2)) / (2 * merger.v.accel)  ) ) ){
+					clear = false;
+				}
+				check = check.next;
+			}
+		}
+
+		if(clear == true){
+			
+			if(circle.size > 0){
+				check = circle.head;
+				for(int j = 0; j < circle.size; j++){
+					if(check.v.position < mergePos && mergePos < check.next.v.position){
+						merger.prev = check;
+						merger.next = check.next;
+						check.next.prev = merger;
+						check.next = merger;
+						merger.v.position = 0.5 * merger.v.accel * Math.pow(timeStep, 2);
+						merger.v.speed = merger.v.accel *timeStep;
+					}
+				}
+				
+			}
+			lane.head.next.prev = null;
+			lane.head = lane.head.next;
+		}
 		
 	}
+	
+	public static void processExit(trafficLane exit1, trafficLane exit2, trafficLane exit3, trafficLane exit4, trafficLane exit5,  trafficLane exit6, trafficLane circle, float laneSpeedLim, float timeStep){
+		vehicleNode exiter = circle.head;
+		vehicleNode check = circle.head;
+		trafficLane exit = null;
+		float exitPos = 0;
+		switch(exiter.v.exitNum){
+		case 1:
+			exitPos = l1Pos;
+			exit = exit1;
+			break;
+		case 2: 
+			exitPos = l2Pos;
+			exit = exit2;
+			break;
+		case 3:
+			exitPos = l3Pos;
+			exit = exit3;
+			break;
+		case 4: 
+			exitPos = l4Pos;
+			exit = exit4;
+			break;
+		case 5:
+			exitPos = l5Pos;
+			exit = exit5;
+			break;
+		case 6:
+			exitPos = l6Pos;
+			exit = exit6;
+			break;
+		}
+		
+		
+		if(circle.size > 0){
+			for(int i = 0; i < circle.size; i++){
+				if((check.v.position + (check.v.speed *timeStep) > exitPos)){
+					exiter = check;
+					check.next.prev = check.prev;
+					check.prev.next = check.next;
+					exiter.prev = exit.tail;
+					exiter.next = null;
+					exit.tail.next = exiter;
+					exiter.v.position = (exiter.v.position + ((exiter.v.speed * timeStep) + (0.5 * exiter.v.accel * Math.pow(timeStep, 2)))) - exitPos;
+					exiter.v.speed = exiter.v.speed + (exiter.v.accel * timeStep);
+				}
+			}
+		}
+	}
+	
 	public static void moveTrafficExit(trafficLane exit, float timeStep, float laneSpeedLim, int laneLength){
 		if(exit.size > 0){
 			vehicleNode cur = exit.head;
@@ -190,7 +300,7 @@ public class simManager {
 					}
 
 				}else if(cur.v.position < laneLength ){
-					
+
 					if(cur.v.speed == (laneSpeedLim * (cur.v.aggLvl * 0.05))){
 						cur.v.position = cur.v.position + (cur.v.speed * timeStep);
 						if((cur.prev.v.position - cur.prev.v.length) < (cur.v.position + (cur.v.brakeDist * (cur.v.aggLvl * 0.1)))){
@@ -241,13 +351,13 @@ public class simManager {
 		}
 	}
 
-	@SuppressWarnings("null")
+
 	public static void parseConfigFile(){
-		String file = "config.txt";
+		File file =new File( "config.txt");
 		try {
 
 			Scanner sc = new Scanner(file);
-			while (sc.hasNextLine()) {
+			while (sc.hasNext()) {
 				//String line = sc.nextLine();
 
 				switch (sc.next()) {
@@ -483,44 +593,32 @@ public class simManager {
 
 				case "l1Loc":
 					l1Loc = sc.nextInt();
-					if(l1Loc == 0) {
-						l1Loc = (Integer) null;
-					}
+
 					break;
 
 				case "l2Loc":
 					l2Loc = sc.nextInt();
-					if(l2Loc == 0) {
-						l2Loc = (Integer) null;
-					}
+
 					break;
 
 				case "l3Loc":
 					l3Loc = sc.nextInt();
-					if(l3Loc == 0) {
-						l3Loc = (Integer) null;
-					}
+
 					break;
 
 				case "l4Loc":
 					l4Loc = sc.nextInt();
-					if(l4Loc == 0) {
-						l4Loc = (Integer) null;
-					}
+
 					break;
 
 				case "l5Loc":
 					l5Loc = sc.nextInt();
-					if(l5Loc == 0) {
-						l5Loc = (Integer) null;
-					}
+
 					break;
 
 				case "l6Loc":
 					l6Loc = sc.nextInt();
-					if(l6Loc == 0) {
-						l6Loc = (Integer) null;
-					}
+
 					break;
 
 				case "laneSpeedLim":
@@ -545,7 +643,7 @@ public class simManager {
 		}
 	}
 
-	public static void createTraffic(int numLanes, float minReact, float avReact,	float maxReact, int minAggression,
+	public static void createTraffic(trafficLane lane1, trafficLane lane2,  trafficLane lane3, trafficLane lane4, trafficLane lane5, trafficLane lane6, trafficLane exit1, trafficLane exit2, trafficLane exit3, trafficLane exit4, trafficLane exit5, trafficLane exit6, trafficLane circle, int numLanes, float minReact, float avReact,	float maxReact, int minAggression,
 			int maxAggression, int numCars,	int numXs, int numSUV,	int numTrucks, int numIT, float minCarLength, float maxCarLength,
 			float avCarLength, float minXLength, float avXLength, float maxXLength, float minSUVLength, float avSUVLength, float maxSUVLength,
 			float minTruckLength, float avTruckLength, float maxTruckLength, float minITLength, float avITLength, float maxITLength,
@@ -562,7 +660,7 @@ public class simManager {
 						minCarBrake,  maxCarBrake,  avCarBrake,  minCarAccl,  maxCarAccl,  avCarAccl,  minReact,  avReact,  maxReact);
 				car.setID(i);
 				setUpLane(car, laneSpeedLim);
-				addToLane(car);
+				addToLane( lane1,  lane2,   lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,  exit6,  circle, car);
 			}
 
 			if(i <= numXs){
@@ -570,7 +668,7 @@ public class simManager {
 						avXBrake, maxXBrake, minXAccl, avXAccl, maxXAccl, minReact,  avReact,  maxReact);
 				x.setID((i + numCars));
 				setUpLane(x, laneSpeedLim);
-				addToLane(x);
+				addToLane(lane1,  lane2,   lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,  exit6,  circle,x);
 			}
 
 			if (i <= numSUV){
@@ -578,7 +676,7 @@ public class simManager {
 						minSUVBrake, avSUVBrake, maxSUVBrake, minSUVAccl, avSUVAccl, maxSUVAccl, minReact,  avReact,  maxReact);
 				SUV.setID(i + numCars + numXs);
 				setUpLane(SUV, laneSpeedLim);
-				addToLane(SUV);
+				addToLane(lane1,  lane2,   lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,  exit6,  circle,SUV);
 			}
 
 			if (i <= numTrucks){
@@ -586,7 +684,7 @@ public class simManager {
 						avTruckLength, minTruckBrake, avTruckBrake, maxTruckBrake, minTruckAccl, avTruckAccl, maxTruckAccl, minReact,  avReact,  maxReact);
 				truck.setID(i + numCars + numXs + numSUV);
 				setUpLane(truck, laneSpeedLim);
-				addToLane(truck);
+				addToLane(lane1,  lane2,   lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,  exit6,  circle,truck);
 			}
 
 			if (i <= numIT){
@@ -594,7 +692,7 @@ public class simManager {
 						minITBrake, avITBrake, maxITBrake, minITAccl, avITAccl, maxITAccl, minReact,  avReact,  maxReact);
 				IT.setID(i + numCars + numXs + numSUV + numTrucks);
 				setUpLane(IT, laneSpeedLim);
-				addToLane(IT);
+				addToLane(lane1,  lane2,   lane3,  lane4,  lane5,  lane6,  exit1,  exit2,  exit3,  exit4,  exit5,  exit6,  circle,IT);
 			}
 		}
 	}
@@ -648,7 +746,7 @@ public class simManager {
 
 	}
 
-	public static void addToLane(vehicle car){
+	public static void addToLane( trafficLane lane1, trafficLane lane2,  trafficLane lane3, trafficLane lane4, trafficLane lane5, trafficLane lane6, trafficLane exit1, trafficLane exit2, trafficLane exit3, trafficLane exit4, trafficLane exit5, trafficLane exit6, trafficLane circle, vehicle car){
 		switch(car.getLane()){
 		case 1:
 			lane1.addVehicle(car);

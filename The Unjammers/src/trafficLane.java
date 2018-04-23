@@ -4,13 +4,13 @@ public class trafficLane {
 	public vehicleNode head;
 	public vehicleNode tail;
 	public int size;
-	
+
 	//default constructor
 	public trafficLane(){
 		head = tail = null;
 		size = 0;
 	}
-	
+
 	//adds vehicle based on position
 	public void addVehicle(vehicle v) {
 		//Empty
@@ -19,18 +19,17 @@ public class trafficLane {
 			size++;
 		}else{
 			vehicleNode cur = head;
-			while (v.getPosition() > cur.v.getPosition()){
+			if(cur.next != null){
 				cur = cur.next;
+
 			}
-			(cur.prev).next = 	new vehicleNode(v, cur.prev, cur.next);
-			cur.prev = (cur.prev).next;
-			if (cur.next == null){
-				tail = cur;
-			}
+			cur.next = 	new vehicleNode(v);
+			cur.next.prev = cur;
+			tail = cur.next;
 			size++;
 		}
 	}
-	
+
 	public void deleteVehicle(int vehicleID){
 		vehicleNode cur = head;
 		while (vehicleID != cur.v.getVehicleID()){
@@ -38,8 +37,9 @@ public class trafficLane {
 		}
 		(cur.prev).next = cur.next;
 		(cur.next).prev = cur.prev;
+		size--;
 	}
-	
+
 	public int getSize() {
 		return size;
 	}
