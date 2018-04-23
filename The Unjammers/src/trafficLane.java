@@ -19,7 +19,7 @@ public class trafficLane {
 			size++;
 		}else{
 			vehicleNode cur = head;
-			if(cur.next != null){
+			while(cur.next != null){
 				cur = cur.next;
 
 			}

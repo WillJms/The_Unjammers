@@ -1,4 +1,6 @@
 import java.util.Random;
+import javafx.scene.shape.Circle;
+
 public class vehicle {
 
 	//class veriables
@@ -12,6 +14,7 @@ public class vehicle {
 	public float brakeDist;
 	public float accel;
 	public float react;
+	
 
 	//default constructor
 	public vehicle(double position, int speed, int length, int exitNum, int aggLvl, int maxAccl, int lane, int vehicleID){
@@ -22,6 +25,7 @@ public class vehicle {
 		this.aggLvl = aggLvl;
 		this.lane = lane;
 		this.vehicleID = vehicleID;
+		
 	}
 	//TODO figure out vehicle constructor based on user input
 	public vehicle(	int numLanes, int minAggression, int maxAggression, int numCars,float minCarLength, float maxCarLength, float avCarLength, float minCarBrake, float maxCarBrake, float avCarBrake, float minCarAccl, float maxCarAccl, float avCarAccl, float minReact, float avReact, float maxReact){
