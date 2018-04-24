@@ -1,5 +1,6 @@
+timeStep 1
 numVehicles 20
-minAggression 1
+minAggression 2
 maxAggression 10
 numCars 50
 numXs 50
@@ -53,10 +54,10 @@ avITAccl 20.0
 maxITAccl 18.0
 minReact 1.5
 numLanes 4
-l1Loc 90
-l2Loc 180
-l3Loc 270
-l4Loc 360
+l1Loc 91
+l2Loc 181
+l3Loc 271
+l4Loc 359
 l5Loc 0
 l6Loc 0
 laneSpeedLim 15.65 
